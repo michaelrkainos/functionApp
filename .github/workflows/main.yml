@@ -1,0 +1,56 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
+      - name: Azure Functions Action
+        uses: Azure/functions-action@v1.3.1
+        with:
+          # Name of the Azure Function App
+          app-name: FNname
+          # Path to package or folder. *.zip or a folder to deploy
+          #package: # optional, default is .
+          # Function app slot to be deploy to
+          #slot-name: # optional
+          # Publish profile (*.publishsettings) file contents with web deploy secrets
+          #publish-profile: # optional
+          # Automatically look up Java function app artifact from pom.xml (default: 'false'). When this is set to 'true', 'package' should point to the folder of host.json.
+          #respect-pom-xml: # optional, default is false
+          # Remove unwanted files defined in .funcignore file (default: 'false'). When this is set to 'true', 'package' should point to the folder of host.json.
+          #respect-funcignore: # optional, default is false
+          # Enable build action from Kudu when the package is deployed onto the function app. This will temporarily change the SCM_DO_BUILD_DURING_DEPLOYMENT setting for this deployment. To bypass this and use the existing settings from your function app, please set this to an empty string ''. To enable remote build for your project, please set this and 'enable-oryx-build' both to 'true'. By default, GitHub Action respsect the packages resolved in GitHub workflow, disabling the redundant build action from Kudu endpoint. (default: 'false').
+          #scm-do-build-during-deployment: # optional, default is false
+          # Use Oryx Build from Kudu when the package is deployed onto the function app. (Linux functions only). This will temporarily change the ENABLE_ORYX_BUILD setting from this deployment. To bypass this and use the existing settings from your function app, please set this to an empty string ''. To enable remote build for your project, please set this and 'scm-do-build-during-deployment' both to 'true'. By default, GitHub Action respsect the packages resolved in GitHub workflow, disabling the redundant build action from Kudu endpoint. (default: 'false').
+          #enable-oryx-build: # optional, default is false
